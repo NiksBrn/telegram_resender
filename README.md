@@ -1,1 +1,2 @@
 # telegram_resender
+According to the idea, this chatbot should forward messages from important public channels to a private group, for timely notification and further confirmation of the post in a circle of like-minded people.
