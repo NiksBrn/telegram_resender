@@ -5,16 +5,18 @@ from telebot import types
 bot = telebot.TeleBot(config.token)
 
 
+arr = []
 @bot.message_handler(commands=["start"])
 def start(message):
     a = bot.send_message(message.chat.id, 'Hello \n Write /help for help.')
     print(message.chat.id)
+    arr.append(a.id)
     #print(a.id)
     #bot.delete_message(chat_id=message.chat.id, message_id=a.id)
 @bot.message_handler(commands=["help"])
 def help(message):
-    bot.send_message(message.chat.id, 'This bot is using for resend to you messages from some public channel')
-
+    a = bot.send_message(message.chat.id, 'This bot is using for resend to you messages from some public channel')
+    arr.append(a.id)
 @bot.message_handler(commands=["spam_petr"])
 def spam_petr(message):
     m1 = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -54,8 +56,8 @@ def spam_petr(message):
 
 @bot.message_handler(content_types=['text'])
 def go(message):
+    global arr
     r = message.text
-    arr = []
     m2 = types.ReplyKeyboardMarkup(resize_keyboard=True)
     bm2 = types.KeyboardButton("достать пальчик")
     m2.add(bm2)
@@ -95,8 +97,10 @@ def go(message):
         a = bot.send_video(message.chat.id, w2, reply_markup=types.ReplyKeyboardRemove(), parse_mode='Markdown')
         arr.append(a.id)
     elif r == 'удали':
+        print(arr)
         for k in arr:
             bot.delete_message(message.chat.id, message_id=k)
+        arr = []
 
 @bot.channel_post_handler()
 def messages(message):
