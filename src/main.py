@@ -7,9 +7,10 @@ bot = telebot.TeleBot(config.token)
 
 @bot.message_handler(commands=["start"])
 def start(message):
-    bot.send_message(message.chat.id, 'Hello \n Write /help for help.')
+    a = bot.send_message(message.chat.id, 'Hello \n Write /help for help.')
     print(message.chat.id)
-
+    #print(a.id)
+    #bot.delete_message(chat_id=message.chat.id, message_id=a.id)
 @bot.message_handler(commands=["help"])
 def help(message):
     bot.send_message(message.chat.id, 'This bot is using for resend to you messages from some public channel')
@@ -54,7 +55,7 @@ def spam_petr(message):
 @bot.message_handler(content_types=['text'])
 def go(message):
     r = message.text
-
+    arr = []
     m2 = types.ReplyKeyboardMarkup(resize_keyboard=True)
     bm2 = types.KeyboardButton("достать пальчик")
     m2.add(bm2)
@@ -79,16 +80,23 @@ def go(message):
 
 
     if(r == 'начать!'):
-        bot.send_photo(message.chat.id,photo1,reply_markup=m2)
+        a = bot.send_photo(message.chat.id,photo1,reply_markup=m2)
+        arr.append(a.id)
     elif r == 'достать пальчик':
-        bot.send_photo(message.chat.id, photo2,reply_markup=m3)
+        a = bot.send_photo(message.chat.id, photo2,reply_markup=m3)
+        arr.append(a.id)
     elif r == 'почухать пальчиком в попе':
-        bot.send_video(message.chat.id, w,reply_markup=m4)
+        a = bot.send_video(message.chat.id, w,reply_markup=m4)
+        arr.append(a.id)
     elif r == 'потереть ножки':
-        bot.send_video(message.chat.id, w1, reply_markup=m4)
+        a = bot.send_video(message.chat.id, w1, reply_markup=m4)
+        arr.append(a.id)
     elif r == 'game_over':
-        bot.send_video(message.chat.id, w2, reply_markup=types.ReplyKeyboardRemove(), parse_mode='Markdown')
-
+        a = bot.send_video(message.chat.id, w2, reply_markup=types.ReplyKeyboardRemove(), parse_mode='Markdown')
+        arr.append(a.id)
+    elif r == 'удали':
+        for k in arr:
+            bot.delete_message(message.chat.id, message_id=k)
 
 @bot.channel_post_handler()
 def messages(message):
