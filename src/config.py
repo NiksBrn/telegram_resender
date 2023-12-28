@@ -1,0 +1,2 @@
+token = '6658329963:AAHYdHCjPsLcdH9VIFtHEwEazjUyUBIZvoM'
+owner = '-1001845843601'
